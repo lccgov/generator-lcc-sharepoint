@@ -15,6 +15,7 @@ var gutil = require('gulp-util');
 var sourcemaps = require('gulp-sourcemaps');
 var fileExists = require('file-exists');
 var fs = require('fs');
+var metadata = require('./metadata.json');
 
 gulp.task('clean:dist', (done) => {
     rmdir('./dist', function (err, dirs, files) {
@@ -125,26 +126,7 @@ gulp.task('sp-upload', ['sass'], (done) => {
         "publish": true,
         "verbose": false,
         "update_metadata":true,
-        "files_metadata": [
-            {
-                "name": "layout_multi_sections_home.aspx",              
-                "metadata": {
-                    "__metadata": {
-                        "type": "SP.Data.OData__x005f_catalogs_x002f_masterpageItem"
-                    },
-                    "Title": "Multi Section Home Layout (LCC)"
-                }
-            },
-            {
-                "name": "layout_multi_sections.aspx",
-                "metadata": {
-                    "__metadata": {
-                        "type": "SP.Data.OData__x005f_catalogs_x002f_masterpageItem"
-                    },
-                    "Title": "Multi Section Layout (LCC)"
-                }
-            }
-        ]
+        "files_metadata": metadata
     })
     );
 });

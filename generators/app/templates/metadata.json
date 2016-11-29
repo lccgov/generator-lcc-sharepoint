@@ -1,0 +1,20 @@
+[
+    {
+        "name": "layout_multi_sections_home.aspx",              
+        "metadata": {
+            "__metadata": {
+                "type": "SP.Data.OData__x005f_catalogs_x002f_masterpageItem"
+            },
+            "Title": "Multi Section Home Layout (LCC)"
+        }
+    },
+    {
+        "name": "layout_multi_sections.aspx",
+        "metadata": {
+            "__metadata": {
+                "type": "SP.Data.OData__x005f_catalogs_x002f_masterpageItem"
+            },
+            "Title": "Multi Section Layout (LCC)"
+        }
+    }
+]
