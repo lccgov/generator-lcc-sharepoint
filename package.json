@@ -13,7 +13,7 @@
   ],
   "main": "generators/index.js",
   "keywords": [
-    "",
+    "LCC",
     "yeoman-generator"
   ],
   "dependencies": {
@@ -45,8 +45,7 @@
   },
   "repository": "lccgov/generator-lcc-sharepoint",
   "scripts": {
-    "prepublish": "gulp prepublish",
-    "test": "gulp"
+    "prepublish": "gulp prepublish"
   },
   "license": "MIT"
 }
