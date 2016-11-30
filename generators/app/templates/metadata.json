@@ -5,7 +5,8 @@
             "__metadata": {
                 "type": "SP.Data.OData__x005f_catalogs_x002f_masterpageItem"
             },
-            "Title": "Multi Section Home Layout (LCC)"
+            "Title": "Multi Section Home Layout (LCC)",
+            "ContentTypeId": "0x010100C568DB52D9D0A14D9B2FDCC96666E9F2007948130EC3DB064584E219954237AF390064DEA0F50FC8C147B0B6EA0636C4A7D4"
         }
     },
     {
@@ -14,7 +15,8 @@
             "__metadata": {
                 "type": "SP.Data.OData__x005f_catalogs_x002f_masterpageItem"
             },
-            "Title": "Multi Section Layout (LCC)"
+            "Title": "Multi Section Layout (LCC)",
+            "ContentTypeId": "0x010100C568DB52D9D0A14D9B2FDCC96666E9F2007948130EC3DB064584E219954237AF3900242457EFB8B24247815D688C526CD44D"
         }
     }
 ]
