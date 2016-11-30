@@ -11,12 +11,20 @@ module.exports = yeoman.Base.extend({
       'Welcome to the ' + chalk.blue('LCC Sharepoint') + ' generator!'
     ));
 
-    var prompts = [{
-      type: 'confirm',
-      name: 'goCreate',
-      message: 'I will create you a shiny new SharePoint project in the current directory?',
-      default: true
-    }];
+    var prompts = [
+      {
+        type: 'confirm',
+        name: 'goCreate',
+        message: 'I will create you a shiny new SharePoint project in the current directory?',
+        default: true
+      },
+      {
+      type: 'input',
+      name: 'name',
+      message: 'What is the name of this package?',
+      default: this.appname
+      }
+      ];
 
     return this.prompt(prompts).then(function (props) {
       // To access props later use this.props.someAnswer;
