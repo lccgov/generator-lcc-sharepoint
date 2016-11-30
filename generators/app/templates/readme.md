@@ -41,10 +41,12 @@ Metadata for these files needs to be added to the metadata.json file. The file a
 - Title: The display title of the layout in SharePoint
 
 You can leave any other attributes.
+NB: Currently it seems there is no way to set the Associated Content Type property for Page Layouts, you can set the content type but must manually go and set the Associated Content Type. You only need to do this once, subsequent uploads will be fine.
+
 
 
 ## Gotchas
 
-### Leave the dist folder
+### Leave the dist folder alone
 Seriously, if you want to edit any files edit them in the app folder. If you want to modify any out of the box masterpages, you should do this in the relevant repo then update the package in this project.
 Still not convinced? All the files in the dist folder are cleared out at each build if that helps make your mind up.
