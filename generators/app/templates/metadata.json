@@ -1,5 +1,15 @@
 [
     {
+        "name": "<%= name %>.master",
+        "metadata": {
+            "__metadata": {
+                "type": "SP.Data.OData__x005f_catalogs_x002f_masterpageItem"
+            },
+            "Title": "<%= name %> Masterpage",
+            "ContentTypeId": "0x010105"
+        }
+    },
+    {
         "name": "layout_multi_sections_home.aspx",              
         "metadata": {
             "__metadata": {
