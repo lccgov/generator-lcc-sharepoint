@@ -8,13 +8,13 @@ module.exports = yeoman.Base.extend({
   prompting: function () {
     // Have Yeoman greet the user.
     this.log(yosay(
-      'Welcome to the pioneering ' + chalk.blue('generator-lcc-sharepoint') + ' generator!'
+      'Welcome to the ' + chalk.blue('LCC Sharepoint') + ' generator!'
     ));
 
     var prompts = [{
       type: 'confirm',
-      name: 'someAnswer',
-      message: 'Would you like to enable this option?',
+      name: 'goCreate',
+      message: 'I will create you a shiny new SharePoint project in the current directory?',
       default: true
     }];
 
@@ -26,19 +26,26 @@ module.exports = yeoman.Base.extend({
 
   copyTemplates: function () {
     var _this = this;
-    this.registerTransformStream(rename(function (path) {
-        path.dirname = path.dirname.replace('_','');
-        path.basename = path.basename.replace('_','');
-        return path;
-    }));
-    this.fs.copyTpl(
-      this.templatePath(),
-      this.destinationPath(),
-      _this.props
-    );
+    if(_this.props.goCreate) 
+    {
+        console.log(chalk.green("Create you a new shiny SharePoint branding"));
+        this.registerTransformStream(rename(function (path) {
+            path.dirname = path.dirname.replace('_','');
+            path.basename = path.basename.replace('_','');
+            return path;
+        }));
+        this.fs.copyTpl(
+          this.templatePath(),
+          this.destinationPath(),
+          _this.props
+        );
+    }
   },
 
   install: function () {
-    this.installDependencies();
+    if(this.props.goCreate) 
+    {
+      this.installDependencies();
+    }
   }
 });
