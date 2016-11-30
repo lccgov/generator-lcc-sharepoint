@@ -4,20 +4,6 @@ This project contains assets for deployment into an LCC SharePoint site. The yeo
 ## Getting Started
 These instructions will help you to understand the project and setup up the components for deployment into a SharePoint on-premises environment.
 
-### Deployment
-Modify the settings.json file and enter your network username (without the AD prefix), password and the site you want to deploy the assets to. 
-The project contains a [VS Code](https://code.visualstudio.com) build task that will build and upload the files to the SharePoint site.
-Press Ctrl + Shift + B to build and upload or from a terminal window type 
-```sh
-$ gulp upload
-```
-
-You can optionally supply the following debug parameter to gulp. Passing this parameter will stop the call to uglify for easier browser debugging.
-```sh
---debug
-```
-
-
 ## Customising Assets
 ### Adding new images
 You can extra images by placing them in the app/assets/images directory under the project root.
@@ -37,13 +23,31 @@ Any other files placed in the app/assets directory will be uploaded to _catalogs
 Some file types require associated metadata, Page Layouts for example. 
 Metadata for these files needs to be added to the metadata.json file. The file already contains metadata for the default page layouts, you may copy one of these to use for your custom page layout changing the following attributes:
 
-- name: This is the name of the file on the file system
-- Title: The display title of the layout in SharePoint
+- **name**: This is the name of the file on the file system
+- **Title**: The display title of the layout in SharePoint
 
 You can leave any other attributes.
-NB: Currently it seems there is no way to set the Associated Content Type property for Page Layouts, you can set the content type but must manually go and set the Associated Content Type. You only need to do this once, subsequent uploads will be fine.
 
+## Deployment
+Modify the settings.json file and enter your network username (without the AD prefix), password and the site you want to deploy the assets to. 
+The project contains a [VS Code](https://code.visualstudio.com) build task that will build and upload the files to the SharePoint site.
+Press Ctrl + Shift + B to build and upload or from a terminal window type 
+```sh
+$ gulp upload
+```
 
+You can optionally supply the following debug parameter to gulp. Passing this parameter will stop the call to uglify for easier browser debugging.
+```sh
+--debug
+```
+
+### Post deployment
+There are currently a few steps you need to carry out once you have deployed the assets. These could be automated as part of the release process if required.
+- **Set the Associated Content Type for Page Layouts**
+Currently it seems there is no way to set the Associated Content Type property for Page Layouts, you can set the content type but must manually go and set the     Associated Content Type. You only need to do this once, subsequent uploads will be fine.
+ - **Configure the site to use the new masterpage**
+In SharePoint you need to set the Site Collection use the new masterpage. The masterpage will default to the package name that you specified at the start
+*TIP: You can find this out by looking at the name property in package.json*
 
 ## Gotchas
 
