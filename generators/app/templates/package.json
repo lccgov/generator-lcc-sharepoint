@@ -1,5 +1,5 @@
 {
-  "name": "lcc_breeze",
+  "name": "<%= name %>",
   "version": "1.0.0",
   "description": "",
   "main": "gulpfile.js",
@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lccgov/lcc_breeze.git"
+    "url": ""
   },
   "author": "LCC",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/lccgov/lcc_breeze/issues"
+    "url": ""
   },
-  "homepage": "https://github.com/lccgov/lcc_breeze#readme",
+  "homepage": "",
   "dependencies": {
     "file-exists": "^2.0.0",
     "file-system": "^2.2.1",
