@@ -23,4 +23,4 @@ If you have [Visual Studio Code](ttps://code.visualstudio.com/) installed you ca
 code .
 ```
 
-Please see the readme file within your generated project for instructions on how to config and deploy the project.
+Please see the [readme file](https://github.com/lccgov/generator-lcc_sharepoint/blob/master/generators/app/templates/readme.md) within the generated project for instructions on how to config and deploy the project.
