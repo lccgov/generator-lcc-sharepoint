@@ -4,7 +4,7 @@ This project contains assets for deployment into an LCC SharePoint site. The yeo
 ## Getting Started
 These instructions will help you to understand the project and setup up the components for deployment into a SharePoint on-premises environment.
 
-## Initial Configuration
+## Configuration
 
 Rename settings.default.json to settings.json and update the details:
 
@@ -63,3 +63,6 @@ In SharePoint you need to set the Site Collection use the new masterpage. The ma
 ### Leave the dist folder alone
 Seriously, if you want to edit any files edit them in the app folder. If you want to modify any out of the box masterpages, you should do this in the relevant repo then update the package in this project.
 Still not convinced? All the files in the dist folder are cleared out at each build if that helps make your mind up.
+
+### Getting 403 or 401 Unauthorised
+You may receive  a 401 or 403 Unauthorised when you try and deploy to the SharePoint site. The easiest way to fix this is to give yourself (or the user you're trying to run as) Full Control in the User Policy for the Web Application
