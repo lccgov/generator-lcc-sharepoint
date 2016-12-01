@@ -53,7 +53,8 @@ module.exports = yeoman.Base.extend({
   install: function () {
     if(this.props.goCreate) 
     {
-      this.installDependencies();
+      console.log(chalk.green("Running npm install, so you don't have to"));      
+      this.npmInstall();
     }
   }
 });
