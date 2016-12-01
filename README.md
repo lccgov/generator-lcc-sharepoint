@@ -1,5 +1,4 @@
-# generator-lcc-sharepoint [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage percentage][coveralls-image]][coveralls-url]
-> LCC SharePoint branding generator
+# LCC SharePoint branding generator
 
 ## Installation
 
@@ -16,23 +15,10 @@ Then generate your new project:
 yo lcc-sharepoint
 ```
 
-## Getting To Know Yeoman
+If you have [Visual Studio Code](ttps://code.visualstudio.com/) installed you can open the project in it by typing:
 
- * Yeoman has a heart of gold.
- * Yeoman is a person with feelings and opinions, but is very easy to work with.
- * Yeoman can be too opinionated at times but is easily convinced not to be.
- * Feel free to [learn more about Yeoman](http://yeoman.io/).
+```bash
+code .
+```
 
-## License
-
-MIT © [LCC]()
-
-
-[npm-image]: https://badge.fury.io/js/generator-lcc-sharepoint.svg
-[npm-url]: https://npmjs.org/package/generator-lcc-sharepoint
-[travis-image]: https://travis-ci.org/lccgov/generator-lcc-sharepoint.svg?branch=master
-[travis-url]: https://travis-ci.org/lccgov/generator-lcc-sharepoint
-[daviddm-image]: https://david-dm.org/lccgov/generator-lcc-sharepoint.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/lccgov/generator-lcc-sharepoint
-[coveralls-image]: https://coveralls.io/repos/lccgov/generator-lcc-sharepoint/badge.svg
-[coveralls-url]: https://coveralls.io/r/lccgov/generator-lcc-sharepoint
+Please see the readme file within your generated project for instructions on how to config and deploy the project.

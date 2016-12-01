@@ -4,6 +4,15 @@ This project contains assets for deployment into an LCC SharePoint site. The yeo
 ## Getting Started
 These instructions will help you to understand the project and setup up the components for deployment into a SharePoint on-premises environment.
 
+## Initial Configuration
+
+Rename settings.default.json to settings.json and update the details:
+
+- **username** - your network username
+- **password** - your password
+- **siteUrl** - the SharePoint site you want to deploy to
+
+
 ## Customising Assets
 ### Adding new images
 You can extra images by placing them in the app/assets/images directory under the project root.
