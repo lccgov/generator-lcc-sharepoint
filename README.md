@@ -9,6 +9,8 @@ npm install -g yo
 npm install -g generator-lcc-sharepoint
 ```
 
+Create a new directory for your project, then CD into it
+
 Then generate your new project:
 
 ```bash
