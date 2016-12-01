@@ -54,7 +54,7 @@ You can optionally supply the following debug parameter to gulp. Passing this pa
 There are currently a few steps you need to carry out once you have deployed the assets. These could be automated as part of the release process if required.
 - **Set the Associated Content Type for Page Layouts**
 Currently it seems there is no way to set the Associated Content Type property for Page Layouts, you can set the content type but must manually go and set the     Associated Content Type. You only need to do this once, subsequent uploads will be fine.
- - **Configure the site to use the new masterpage**
+- **Configure the site to use the new masterpage**
 In SharePoint you need to set the Site Collection use the new masterpage. The masterpage will default to the package name that you specified at the start
 *TIP: You can find this out by looking at the name property in package.json*
 
