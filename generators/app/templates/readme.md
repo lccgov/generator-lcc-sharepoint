@@ -56,7 +56,7 @@ There are currently a few steps you need to carry out once you have deployed the
 Currently it seems there is no way to set the Associated Content Type property for Page Layouts, you can set the content type but must manually go and set the     Associated Content Type. You only need to do this once, subsequent uploads will be fine.
 - **Configure the site to use the new masterpage**
 In SharePoint you need to set the Site Collection use the new masterpage. The masterpage will default to the package name that you specified at the start
-*TIP: You can find this out by looking at the name property in package.json*
+*TIP: You can find this by looking at the name property in package.json*
 
 ## Gotchas
 
@@ -64,5 +64,5 @@ In SharePoint you need to set the Site Collection use the new masterpage. The ma
 Seriously, if you want to edit any files edit them in the app folder. If you want to modify any out of the box masterpages, you should do this in the relevant repo then update the package in this project.
 Still not convinced? All the files in the dist folder are cleared out at each build if that helps make your mind up.
 
-### Getting 403 or 401 Unauthorised
+### Receiving 403 or 401 Unauthorised
 You may receive  a 401 or 403 Unauthorised when you try and deploy to the SharePoint site. The easiest way to fix this is to give yourself (or the user you're trying to run as) Full Control in the User Policy for the Web Application
