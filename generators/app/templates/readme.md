@@ -12,7 +12,7 @@ $ npm install -g gulp
 
 ## Configuration
 
-Rename settings.default.json to settings.json and update the details:
+Rename **settings.default.json** to **settings.json** and update the details:
 
 - **username** - your network username
 - **password** - your password
