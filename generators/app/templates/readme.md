@@ -64,6 +64,16 @@ Currently it seems there is no way to set the Associated Content Type property f
 In SharePoint you need to set the Site Collection use the new masterpage. The masterpage will default to the package name that you specified at the start
 *TIP: You can find this by looking at the name property in package.json*
 
+## Pushing files to a Git repository
+Once you have created a Git repository, you can use the following commands to add the generated project to the repository. Replace **<lcc_repo>** below to match your new repo name
+
+```sh
+git init
+git add .
+git commit -m "first commit"
+git remote add origin https://github.com/lccgov/<lcc_repo>.git
+git push -u origin master
+```
 ## Gotchas
 
 ### Leave the dist folder alone
