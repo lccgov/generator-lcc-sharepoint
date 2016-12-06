@@ -17,6 +17,12 @@ Then generate your new project:
 yo lcc-sharepoint
 ```
 
+Install the npm packages
+
+```bash
+npm install
+```
+
 If you have [Visual Studio Code](ttps://code.visualstudio.com/) installed you can open the project in it by typing:
 
 ```bash
