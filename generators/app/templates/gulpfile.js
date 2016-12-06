@@ -15,7 +15,8 @@ var gutil = require('gulp-util');
 var sourcemaps = require('gulp-sourcemaps');
 var fileExists = require('file-exists');
 var fs = require('fs');
-var metadata = require('./metadata.json');
+var foreach = require('gulp-foreach');
+var path = require('path');
 
 gulp.task('clean:dist', (done) => {
     rmdir('./dist', function (err, dirs, files) {
@@ -25,7 +26,7 @@ gulp.task('clean:dist', (done) => {
 
 //Sync assets to public folder excluding SASS files and JS
 gulp.task('sync:assets', ['clean:dist'], (done) => {
-    syncy(['app/assets/**/*', '!app/assets/sass/**',  '!app/assets/javascripts/**'], './dist/_catalogs/masterpage/public', {
+    syncy(['app/assets/**/*', '!app/assets/sass/**',  '!app/assets/javascripts/**', '!app/assets/*_subsite/javascripts/**', '!app/assets/*_subsite/sass/**', '!app/assets/*_subsite/socialBookmarks.html'], './dist/_catalogs/masterpage/public', {
             ignoreInDest: '**/stylesheets/**',
             base: 'app/assets',
             updateAndDelete: false
@@ -38,9 +39,9 @@ gulp.task('sync:assets', ['clean:dist'], (done) => {
 gulp.task('sync:javascripts', ['sync:assets'], (done) => {
     return gulp.src('app/assets/javascripts/**')
         //don't uglify if gulp is ran with '--debug'
-        .pipe(gutil.env.debug ? gutil.noop() : uglify())
+        .pipe(gutil.env.debug ? gutil.noop() : uglify({preserveComments: 'all'}))
         .pipe(gulp.dest('dist/_catalogs/masterpage/public/javascripts'));
-})
+});
 
 //Sync lcc_frontend_toolkit to lcc_modules to be used for SASS partial compilation
 gulp.task('sync:lcc_frontend_toolkit', ['sync:javascripts'], (done) => {
@@ -60,7 +61,7 @@ gulp.task('sync:lcc_templates_sharepoint_assets', ['sync:lcc_frontend_toolkit'],
         }).then(() => { 
             done();
     }).catch((err) => { done(err);})
-})
+});
 
 //Sync lcc_templates_sharepoint/assets/stylesheets to dist/_catalogs/masterpages/public/stylesheets
 gulp.task('sync:lcc_templates_sharepoint_stylesheets', ['sync:lcc_templates_sharepoint_assets'], (done) => {
@@ -68,15 +69,15 @@ gulp.task('sync:lcc_templates_sharepoint_stylesheets', ['sync:lcc_templates_shar
         //don't clean if gulp is ran with '--debug'
         .pipe(gutil.env.debug ? gutil.noop() : cleanCSS({processImport:false}))
         .pipe(gulp.dest('dist/_catalogs/masterpage/public/stylesheets'));
-})
+});
 
 //Sync lcc_templates_sharepoint/assets/javascripts to dist/_catalogs/masterpages/public/javascripts
 gulp.task('sync:lcc_templates_sharepoint_javascript', ['sync:lcc_templates_sharepoint_stylesheets'], (done) => {
     return gulp.src('node_modules/lcc_templates_sharepoint/assets/javascripts/**')
         //don't uglify if gulp is ran with '--debug'
-        .pipe(gutil.env.debug ? gutil.noop() : uglify())
+        .pipe(gutil.env.debug ? gutil.noop() : uglify({preserveComments: 'all'}))
         .pipe(gulp.dest('dist/_catalogs/masterpage/public/javascripts'));
-})
+});
 
 //Sync lcc_templates_sharepoint/views to dist/_catalogs/masterpages
 gulp.task('sync:lcc_templates_sharepoint_views', ['sync:lcc_templates_sharepoint_javascript'], (done) => {
@@ -86,7 +87,7 @@ gulp.task('sync:lcc_templates_sharepoint_views', ['sync:lcc_templates_sharepoint
         }).then(() => { 
             done();
     }).catch((err) => { done(err);})
-})
+});
 
 var replacements = {};
 
@@ -97,10 +98,10 @@ if(fileExists('./socialBookmarks.html')) {
 
 //Update app css ref and rename master
 gulp.task('sync:lcc_templates_sharepoint_master', ['sync:lcc_templates_sharepoint_views'], (done) => {
-    gulp.src("node_modules/lcc_templates_sharepoint/views/lcc-template.master")
+    return gulp.src("node_modules/lcc_templates_sharepoint/views/lcc-template.master")
     .pipe(htmlreplace(replacements, {keepUnassigned:true}))
-    .pipe(rename(util.format("%s.master", packageName))).pipe(gulp.dest("./dist/_catalogs/masterpage")).on('end', function() { done(); });
-})
+    .pipe(rename(util.format("%s.master", packageName))).pipe(gulp.dest("./dist/_catalogs/masterpage"));
+});
 
 //Compile SASS into the application CSS and copy to public folder
 gulp.task('sass', ['sync:lcc_templates_sharepoint_master'], (done) => {
@@ -117,8 +118,49 @@ gulp.task('sass', ['sync:lcc_templates_sharepoint_master'], (done) => {
       .pipe(gulp.dest('./dist/_catalogs/masterpage/public/stylesheets'))
 });
 
-gulp.task('sp-upload', ['sass'], (done) => {
-    return gulp.src(['dist/**/*.*','!dist/**/*.json'])
+//Compile subsite sass/js and masterpages
+gulp.task('sass:subsites', ['sass'], (done) => {
+    return gulp.src(['app/assets/*_subsite/sass/*.scss'])
+    .pipe(foreach(function(stream, file) {          
+        var subsite = (path.normalize(util.format('%s%s..', path.dirname(file.path), path.sep)).split(path.sep).pop());
+        return stream.pipe(sass({includePaths: ['./app/assets/sass' + subsite,
+            'lcc_modules/lcc_frontend_toolkit/stylesheets/']}).on('error', function (err) {
+            notify({ title: 'SASS Task' }).write(err.line + ': ' + err.message);
+            this.emit('end');
+        }))
+        .pipe(gutil.env.debug ? sourcemaps.write() : gutil.noop())
+        //don't clean if gulp is ran with '--debug'
+        .pipe(gutil.env.debug ? gutil.noop() : cleanCSS({ processImport: false }))
+        .pipe(rename(function(path) {
+            path.dirname = "";
+            return path;
+        }))
+        .pipe(gulp.dest(util.format('./dist/_catalogs/masterpage/public/%s/stylesheets', subsite)));     
+    }));
+});
+
+//Add subsite masterpages
+gulp.task('sync:subsites_master', ['sass:subsites'], (done) => {
+    return gulp.src('app/assets/*_subsite/', ['!app/assets/*_subsite/**/*.*'])
+        .pipe(foreach(function(stream, folder) {  
+            var subsiteName = folder.path.split(path.sep).pop();
+            var replacements = {};
+            replacements.css =  util.format('/_catalogs/masterpage/public/%s/stylesheets/application.css', subsiteName);
+
+            if(fileExists(folder.path + '/socialBookmarks.html')) {
+                replacements.socialBookmarks = fs.readFileSync(folder.path + '/socialBookmarks.html').toString()
+            } else if(fileExists('./socialBookmarks.html')) {
+                 replacements.socialBookmarks = fs.readFileSync('socialBookmarks.html').toString()
+            }
+
+            return gulp.src("node_modules/lcc_templates_sharepoint/views/lcc-template.master")
+ 	            .pipe(htmlreplace(replacements, {keepUnassigned:true}))
+                .pipe(rename(util.format("lcc_%s.master", subsiteName))).pipe(gulp.dest("./dist/_catalogs/masterpage"));
+        }));
+});
+
+gulp.task('sp-upload', ['sync:subsites_master'], (done) => {
+    return gulp.src('dist/**/*.*')
     .pipe(spsync({
         "username": settings.username,
         "password": settings.password,
@@ -126,10 +168,29 @@ gulp.task('sp-upload', ['sass'], (done) => {
         "publish": true,
         "verbose": false,
         "update_metadata":true,
-        "files_metadata": metadata
+        "files_metadata": [
+            {
+                "name": "layout_multi_sections_home.aspx",              
+                "metadata": {
+                    "__metadata": {
+                        "type": "SP.Data.OData__x005f_catalogs_x002f_masterpageItem"
+                    },
+                    "Title": "Multi Section Home Layout (LCC)"
+                }
+            },
+            {
+                "name": "layout_multi_sections.aspx",
+                "metadata": {
+                    "__metadata": {
+                        "type": "SP.Data.OData__x005f_catalogs_x002f_masterpageItem"
+                    },
+                    "Title": "Multi Section Layout (LCC)"
+                }
+            }
+        ]
     })
     );
 });
 
-gulp.task('default',  ['clean:dist', 'sync:assets', 'sync:javascripts', 'sync:lcc_frontend_toolkit', 'sync:lcc_templates_sharepoint_assets', 'sync:lcc_templates_sharepoint_stylesheets', 'sync:lcc_templates_sharepoint_javascript', 'sync:lcc_templates_sharepoint_views', 'sync:lcc_templates_sharepoint_master', 'sass']);
+gulp.task('default',  ['clean:dist', 'sync:assets', 'sync:javascripts', 'sync:lcc_frontend_toolkit', 'sync:lcc_templates_sharepoint_assets', 'sync:lcc_templates_sharepoint_stylesheets', 'sync:lcc_templates_sharepoint_javascript', 'sync:lcc_templates_sharepoint_views', 'sync:lcc_templates_sharepoint_master', 'sass', 'sass:subsites', 'sync:subsites_master']);
 gulp.task('upload',  ['default', 'sp-upload']);
