@@ -4,6 +4,12 @@ This project contains assets for deployment into an LCC SharePoint site. The yeo
 ## Getting Started
 These instructions will help you to understand the project and setup up the components for deployment into a SharePoint on-premises environment.
 
+First off, make sure you have gulp installed
+
+```sh
+$ npm install -g gulp
+```
+
 ## Configuration
 
 Rename settings.default.json to settings.json and update the details:
