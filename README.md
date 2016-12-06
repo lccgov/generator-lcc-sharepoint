@@ -12,17 +12,18 @@ npm install -g generator-lcc-sharepoint
 
 Create a new directory for your project, then CD into it
 
+```bash
+mkdir lcc_sitename
+cd lcc_sitename
+```
+
 Then generate your new project:
 
 ```bash
 yo lcc-sharepoint
 ```
 
-Install the npm packages
-
-```bash
-npm install
-```
+The generator will install the npm packages for you
 
 If you have [Visual Studio Code](ttps://code.visualstudio.com/) installed you can open the project in it by typing:
 
