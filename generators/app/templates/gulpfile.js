@@ -17,7 +17,17 @@ var fileExists = require('file-exists');
 var fs = require('fs');
 var foreach = require('gulp-foreach');
 var path = require('path');
+var manifest = require('./manifest.json')
+var Mincer = require("mincer")
+var mince = require("gulp-mincer")
+var _ = require("lodash")
+var ignore = require("gulp-ignore")
 var metadata = require('./metadata.json');
+
+var env = new Mincer.Environment();
+env.appendPath('app/assets/javascripts');
+env.appendPath('lcc_modules/lcc_frontend_toolkit/javascripts');
+env.appendPath('node_modules/lcc_sharepoint_toolkit/javascript');
 
 gulp.task('clean:dist', (done) => {
     rmdir('./dist', function (err, dirs, files) {
@@ -27,7 +37,7 @@ gulp.task('clean:dist', (done) => {
 
 //Sync assets to public folder excluding SASS files and JS
 gulp.task('sync:assets', ['clean:dist'], (done) => {
-    syncy(['app/assets/**/*', '!app/assets/sass/**',  '!app/assets/javascripts/**', '!app/assets/*_subsite/javascripts/**', '!app/assets/*_subsite/sass/**', '!app/assets/*_subsite/socialBookmarks.html'], './dist/_catalogs/masterpage/public', {
+    syncy(['app/assets/**/*', '!app/assets/sass/**',  '!app/assets/javascripts/**', '!app/assets/*_subsite/javascripts/**', '!app/assets/*_subsite/sass/**', '!app/assets/*_subsite/socialBookmarks.html', '!app/assets/webparts/**'], './dist/_catalogs/masterpage/public', {
             ignoreInDest: '**/stylesheets/**',
             base: 'app/assets',
             updateAndDelete: false
@@ -36,13 +46,26 @@ gulp.task('sync:assets', ['clean:dist'], (done) => {
     }).catch((err) => { done(err);})
 });
 
-//Sync app/assets/javascripts to dist/_catalogs/masterpages/public/javascripts
-gulp.task('sync:javascripts', ['sync:assets'], (done) => {
-    return gulp.src('app/assets/javascripts/**')
+//Sync app/assets/javascripts/application.js to dist/_catalogs/masterpages/public/javascripts
+//Use mince to add required js files
+gulp.task('sync:javascripts', ['sync:lcc_sharepoint_toolkit_webparts'], (done) => {
+    return gulp.src('app/assets/javascripts/application.js')
+        .pipe(mince(env))
         //don't uglify if gulp is ran with '--debug'
         .pipe(gutil.env.debug ? gutil.noop() : uglify({preserveComments: 'all'}))
         .pipe(gulp.dest('dist/_catalogs/masterpage/public/javascripts'));
 });
+
+//Sync node_modules/lcc_sharepoint_toolkit/webparts to dist/_catalogs/wp (ignore any that aren't in manifest)
+gulp.task('sync:lcc_sharepoint_toolkit_webparts', ['sync:assets'], (done) => {
+    return gulp.src('node_modules/lcc_sharepoint_toolkit/webparts/*.webpart')
+        .pipe(foreach(function(stream, file) {
+            return stream.pipe(ignore.exclude(!(_.includes(manifest.webparts, path.basename(file.path,'.webpart')))))
+                .pipe(gulp.dest('dist/_catalogs/wp'))
+        }))
+})
+
+
 
 //Sync lcc_frontend_toolkit to lcc_modules to be used for SASS partial compilation
 gulp.task('sync:lcc_frontend_toolkit', ['sync:javascripts'], (done) => {
@@ -76,7 +99,7 @@ gulp.task('sync:lcc_templates_sharepoint_stylesheets', ['sync:lcc_templates_shar
 gulp.task('sync:lcc_templates_sharepoint_javascript', ['sync:lcc_templates_sharepoint_stylesheets'], (done) => {
     return gulp.src('node_modules/lcc_templates_sharepoint/assets/javascripts/**')
         //don't uglify if gulp is ran with '--debug'
-        .pipe(gutil.env.debug ? gutil.noop() : uglify({preserveComments: 'all'}))
+              .pipe(gutil.env.debug ? gutil.noop() : uglify({preserveComments: 'all'}))
         .pipe(gulp.dest('dist/_catalogs/masterpage/public/javascripts'));
 });
 
@@ -99,10 +122,10 @@ if(fileExists('./socialBookmarks.html')) {
 
 //Update app css ref and rename master
 gulp.task('sync:lcc_templates_sharepoint_master', ['sync:lcc_templates_sharepoint_views'], (done) => {
-    return gulp.src("node_modules/lcc_templates_sharepoint/views/lcc-template.master")
+    gulp.src("node_modules/lcc_templates_sharepoint/views/lcc-template.master")
     .pipe(htmlreplace(replacements, {keepUnassigned:true}))
-    .pipe(rename(util.format("%s.master", packageName))).pipe(gulp.dest("./dist/_catalogs/masterpage"));
-});
+    .pipe(rename(util.format("%s.master", packageName))).pipe(gulp.dest("./dist/_catalogs/masterpage")).on('end', function() { done(); });
+})
 
 //Compile SASS into the application CSS and copy to public folder
 gulp.task('sass', ['sync:lcc_templates_sharepoint_master'], (done) => {
