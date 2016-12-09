@@ -56,7 +56,7 @@ gulp.task('sync:lcc_frontend_toolkit', ['sync:javascripts'], (done) => {
 
 //Sync lcc_templates_sharepoint/assets excluding JS to dist/_catalogs/masterpages/public
 gulp.task('sync:lcc_templates_sharepoint_assets', ['sync:lcc_frontend_toolkit'], (done) => {
-    syncy(['node_modules/lcc_templates_sharepoint/assets/**/*', '!node_modules/lcc_templates_sharepoint/assets/javascripts/*', '!node_modules/lcc_templates_sharepoint/assets/stylesheets/*'], 'dist/_catalogs/masterpage/public', {
+    syncy(['node_modules/lcc_templates_sharepoint/assets/**/*', '!node_modules/lcc_templates_sharepoint/assets/**/*.json', '!node_modules/lcc_templates_sharepoint/assets/javascripts/*', '!node_modules/lcc_templates_sharepoint/assets/stylesheets/*'], 'dist/_catalogs/masterpage/public', {
             base: 'node_modules/lcc_templates_sharepoint/assets',
             updateAndDelete: false
         }).then(() => { 
@@ -161,7 +161,7 @@ gulp.task('sync:subsites_master', ['sass:subsites'], (done) => {
 });
 
 gulp.task('sp-upload', ['sync:subsites_master'], (done) => {
-    return gulp.src('dist/**/*.*','!dist/**/*.json')
+    return gulp.src('dist/**/*.*')
     .pipe(spsync({
         "username": settings.username,
         "password": settings.password,
