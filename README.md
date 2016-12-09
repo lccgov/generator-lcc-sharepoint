@@ -33,7 +33,7 @@ code .
 
 ## Updating package version numbers
 Remember when you want to update the version number for packages that are in the generated project (frontend_toolkit for example) you need to update them 
-in the [package.json](https://github.com/lccgov/generator-lcc-sharepoint/blob/master/generators/app/package.json) for the template, not in the 
+in the [package.json](https://github.com/lccgov/generator-lcc-sharepoint/blob/master/generators/app/templates/package.json) for the template, not in the 
 package.json for this project. This applies to adding new packages too.
 
 Please see the [readme file](https://github.com/lccgov/generator-lcc-sharepoint/blob/master/generators/app/templates/readme.md) within the generated project for instructions on how to config and deploy the project.
