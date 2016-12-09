@@ -4,6 +4,7 @@ This Yeoman generator allows you to create a new LCC SharePoint branding project
 ## Installation
 
 First, install [Yeoman](http://yeoman.io) and generator-lcc-sharepoint using [npm](https://www.npmjs.com/) (we assume you have pre-installed [node.js](https://nodejs.org/)).
+You should probably do this each time to make sure you get the latest generator-lcc-sharepoint.
 
 ```bash
 npm install -g yo generator-lcc-sharepoint
@@ -30,4 +31,9 @@ If you have [Visual Studio Code](ttps://code.visualstudio.com/) installed you ca
 code .
 ```
 
-Please see the [readme file](https://github.com/lccgov/generator-lcc_sharepoint/blob/master/generators/app/templates/readme.md) within the generated project for instructions on how to config and deploy the project.
+## Updating package version numbers
+Remember when you want to update the version number for packages that are in the generated project (frontend_toolkit for example) you need to update them 
+in the [package.json](https://github.com/lccgov/generator-lcc-sharepoint/blob/master/generators/app/package.json) for the template, not in the 
+package.json for this project. This applies to adding new packages too.
+
+Please see the [readme file](https://github.com/lccgov/generator-lcc-sharepoint/blob/master/generators/app/templates/readme.md) within the generated project for instructions on how to config and deploy the project.
