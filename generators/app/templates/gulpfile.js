@@ -3,7 +3,7 @@ var syncy = require('syncy');
 var sass = require('gulp-sass');
 var notify = require('gulp-notify');
 var spsync = require('gulp-spsync-creds').sync;
-var settings = require('./settings.json');
+var settings;
 var rmdir = require('rmdir');
 var rename = require("gulp-rename");
 var packageName = require('root-require')('package.json').name;
@@ -23,11 +23,21 @@ var mince = require("gulp-mincer")
 var _ = require("lodash")
 var ignore = require("gulp-ignore")
 var metadata = require('./metadata.json');
+var prompt = require('gulp-prompt');
 
 var env = new Mincer.Environment();
 env.appendPath('app/assets/javascripts');
 env.appendPath('lcc_modules/lcc_frontend_toolkit/javascripts');
 env.appendPath('node_modules/lcc_sharepoint_toolkit/javascript');
+
+var settings = {
+    username: undefined,
+    password: undefined,
+    siteUrl: undefined
+}
+
+var noninteractive = gutil.env.noninteractive ? true : false;
+var promptCreds = false;
 
 gulp.task('clean:dist', (done) => {
     rmdir('./dist', function (err, dirs, files) {
@@ -183,9 +193,67 @@ gulp.task('sync:subsites_master', ['sass:subsites'], (done) => {
         }));
 });
 
-gulp.task('sp-upload', ['sync:subsites_master'], (done) => {
+// load settings from file/args
+gulp.task('pre-flight', ['sync:subsites_master'],
+    (done) => {
+        gutil.log(gutil.colors.green('Looking for settings'));
+        if(fileExists('./settings.json')) {
+            settings =  require('./settings.json');
+        }
+
+        settings.username = gutil.env.username ? gutil.env.username : settings.username; 
+        settings.password = gutil.env.password ? gutil.env.password : settings.password; 
+        settings.siteUrl = gutil.env.siteurl ? gutil.env.siteurl : settings.siteUrl; 
+
+        if(settings.username)
+        {
+            gutil.log(gutil.colors.green('found settings for ', settings.username));
+        }
+        else {
+            gutil.log(gutil.colors.yellow('Found no user settings in config or args'));
+            promptCreds = true;
+        }
+        done();
+    }
+);
+
+// prompt for credentials if required
+gulp.task('prompt',['pre-flight'], function () {
+    return gulp.src('')
+    .pipe((promptCreds && !noninteractive) ? 
+        prompt.prompt(
+        [{
+            type: 'input',
+            message: 'Please enter your username',
+            name: 'username',
+            default: ''
+        },
+        {
+            type: 'password',
+            message: 'Please enter your password',
+            name: 'password'
+        },{
+            type: 'input',
+            message: 'Please enter the site Url',
+            name: 'siteurl',
+            default: ''
+        }],
+        function(response){
+            settings.username = response.username;
+            settings.password = response.password;
+            settings.siteUrl = response.siteurl;
+
+        }) : gutil.noop()
+    );
+});
+
+gulp.task('sp-upload', ['prompt'], (done) => {
     var glob = gutil.env.css ? 'dist/**/*.css' :'dist/**/*.*';
     return gulp.src(glob)
+    .pipe(((settings.siteUrl.indexOf("dev")) == -1 && (!noninteractive)) ? prompt.confirm({
+        message: 'You appear to be deploying to a live environment, is that ok?',
+        default: false
+    }) : gutil.noop())
     .pipe(spsync({
         "username": settings.username,
         "password": settings.password,

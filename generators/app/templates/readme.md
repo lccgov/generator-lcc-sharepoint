@@ -43,7 +43,7 @@ Metadata for these files needs to be added to the metadata.json file. The file a
 
 You can leave any other attributes.
 
-## Deployment
+## Dev Deployment
 Modify the settings.json file and enter your network username (without the AD prefix), password and the site you want to deploy the assets to. 
 The project contains a [VS Code](https://code.visualstudio.com) build task that will build and upload the files to the SharePoint site.
 Press Ctrl + Shift + B to build and upload or from a terminal window type 
@@ -55,6 +55,20 @@ You can optionally supply the following debug parameter to gulp. Passing this pa
 ```sh
 --debug
 ```
+
+To only upload CSS files run the gulp task like this
+```sh
+$ gulp upload --css
+```
+
+If the task thinks you are deploying to a non dev environment, you will be prompted to confirm the deployment.
+
+## Live Deployment
+The script allows all settings to be passed as arguments for use as part of CI or CD builds. Call the task like so:
+```sh
+$ gulp upload --username "<username>" --password "<password>" --siteurl "<http://mysite-url>" --noninteractive
+```
+the --noninteractive switch will suppress prompts for credentials or live deployment confirmation
 
 ### Post deployment
 There are currently a few steps you need to carry out once you have deployed the assets. These could be automated as part of the release process if required.
