@@ -2,10 +2,18 @@
 This Yeoman generator allows you to create a new LCC SharePoint branding project for a site. The generator utilises the [lcc_frontend_toolkit](https://github.com/lccgov/lcc_frontend_toolkit) and [lcc_templates_sharepoint](https://github.com/lccgov/lcc_templates_sharepoint) packages which have the basic masterpages, page layouts and assets as defined by the designers. From the generated project you can add additional assets to support the look of the new site.
 
 ## Installation
+Please install the following pre-requisites
+- [Node.js](https://nodejs.org/en/)
+- [VS code](https://code.visualstudio.com/Download) (Optional)
 
-First, install [Yeoman](http://yeoman.io) and generator-lcc-sharepoint using [npm](https://www.npmjs.com/) (we assume you have pre-installed [node.js](https://nodejs.org/)).
-You should probably do this each time to make sure you get the latest generator-lcc-sharepoint.
+Node.js will allow us to use the NPM package manager, but once installed we need to set the proxy to use it from the LCC corporate network
+```sh
+npm config set proxy http://<corporate-proxy>:<port>
+npm config set http_proxy http://<corporate-proxy>:<port>
+```
 
+Next we have to install the NPM packages that we will use. These are [Yeoman](http://yeoman.io) and generator-lcc-sharepoint. You should probably do this each time to make sure you get the latest generator-lcc-sharepoint.
+The following command will install these for us
 ```bash
 npm install -g yo generator-lcc-sharepoint
 ```
@@ -17,7 +25,7 @@ mkdir lcc_sitename
 cd lcc_sitename
 ```
 
-Then generate your new project:
+Then generate your new project, following the prompts on-screen.
 
 ```bash
 yo lcc-sharepoint
@@ -31,9 +39,21 @@ If you have [Visual Studio Code](ttps://code.visualstudio.com/) installed you ca
 code .
 ```
 
-## Updating package version numbers
-Remember when you want to update the version number for packages that are in the generated project (frontend_toolkit for example) you need to update them 
-in the [package.json](https://github.com/lccgov/generator-lcc-sharepoint/blob/master/generators/app/templates/package.json) for the template, not in the 
-package.json for this project. This applies to adding new packages too.
+## Updating package version numbers for the generated project
+Remember when you want to update the version number for packages that are in the generated project you need to update them 
+in the [package.json](https://github.com/lccgov/generator-lcc-sharepoint/blob/master/generators/app/templates/package.json) for the template, not in the package.json for this project. For example if you updated the lcc_frontend_toolkit and wanted those changes to be reflect within the project you are generating, you would need to bump the version number in the package above. This applies to adding new packages too.
 
 Please see the [readme file](https://github.com/lccgov/generator-lcc-sharepoint/blob/master/generators/app/templates/readme.md) within the generated project for instructions on how to config and deploy the project.
+
+## Publishing to NPM
+Once you have updated any of the template files, or updated the package version for dependencies you need to publish these back to NPM so the next time you use the generator, you get the new files or package dependencies. 
+First off you need to update the version number in the [package.json](https://github.com/lccgov/generator-lcc-sharepoint/blob/master/package.json) file for this project.
+Next, from the root of this project type
+
+```sh
+$ npm publish
+```
+You should see the the new published version number as the last line written. Something like:
+```sh
++ generator-lcc-sharepoint@0.2.4
+```
