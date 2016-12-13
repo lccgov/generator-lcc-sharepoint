@@ -24,6 +24,7 @@ var _ = require("lodash")
 var ignore = require("gulp-ignore")
 var metadata = require('./metadata.json');
 var prompt = require('gulp-prompt');
+var Uuid = require('uuid');
 
 var env = new Mincer.Environment();
 env.appendPath('app/assets/javascripts');
@@ -125,7 +126,7 @@ gulp.task('sync:lcc_templates_sharepoint_views', ['sync:lcc_templates_sharepoint
 
 var replacements = {};
 
-replacements.css =  util.format('/_catalogs/masterpage/public/stylesheets/%s.css', packageName.replace(/_/g, '-'));
+replacements.css =  util.format('/_catalogs/masterpage/public/stylesheets/%s.css?rev=%s', packageName.replace(/_/g, '-'), Uuid());
 if(fileExists('./socialBookmarks.html')) {
     replacements.socialBookmarks = fs.readFileSync('socialBookmarks.html').toString()
 }
