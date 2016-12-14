@@ -252,7 +252,7 @@ gulp.task('sp-upload', ['prompt'], (done) => {
     var glob = gutil.env.css ? 'dist/**/*.css' :'dist/**/*.*';
     return gulp.src(glob)
     .pipe(((settings.siteUrl.indexOf("dev")) == -1 && (!noninteractive)) ? prompt.confirm({
-        message: 'You appear to be deploying to a live environment, is that ok?',
+        message: 'You appear to be deploying to a non dev environment, is that ok?',
         default: false
     }) : gutil.noop())
     .pipe(spsync({

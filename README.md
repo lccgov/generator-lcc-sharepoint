@@ -39,11 +39,14 @@ If you have [Visual Studio Code](ttps://code.visualstudio.com/) installed you ca
 code .
 ```
 
+Please see the [readme file](https://github.com/lccgov/generator-lcc-sharepoint/blob/master/generators/app/templates/readme.md) within the generated project for instructions on how to config and deploy the project.
+
+If you're using this readme as a starter to scaffold your project, you need to read no further. The rest of this readme concerns itself with updating the generator.
+
 ## Updating package version numbers for the generated project
 Remember when you want to update the version number for packages that are in the generated project you need to update them 
 in the [package.json](https://github.com/lccgov/generator-lcc-sharepoint/blob/master/generators/app/templates/package.json) for the template, not in the package.json for this project. For example if you updated the lcc_frontend_toolkit and wanted those changes to be reflect within the project you are generating, you would need to bump the version number in the package above. This applies to adding new packages too.
 
-Please see the [readme file](https://github.com/lccgov/generator-lcc-sharepoint/blob/master/generators/app/templates/readme.md) within the generated project for instructions on how to config and deploy the project.
 
 ## Publishing to NPM
 Once you have updated any of the template files, or updated the package version for dependencies you need to publish these back to NPM so the next time you use the generator, you get the new files or package dependencies. 

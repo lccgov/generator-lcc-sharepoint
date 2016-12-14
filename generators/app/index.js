@@ -16,7 +16,7 @@ module.exports = yeoman.Base.extend({
       {
         type: 'confirm',
         name: 'goCreate',
-        message: 'I will create you a shiny new SharePoint project in the current directory?',
+        message: 'I will scaffold you an LCC SharePoint project in the current directory?',
         default: true
       },
       {
