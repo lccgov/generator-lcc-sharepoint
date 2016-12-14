@@ -3,6 +3,7 @@ var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
 var rename = require("gulp-rename");
+var parentConfig = require('../../package.json');
 
 module.exports = yeoman.Base.extend({
   prompting: function () {
@@ -30,6 +31,10 @@ module.exports = yeoman.Base.extend({
       // To access props later use this.props.someAnswer;
       this.props = props;
     }.bind(this));
+  },
+
+  loadParentConfig: function () {
+    this.props.generatorVersion = parentConfig.version;
   },
 
   copyTemplates: function () {
