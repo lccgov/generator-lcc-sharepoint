@@ -6,9 +6,8 @@ echo "VERSION_LATEST $VERSION_LATEST";
 echo "VERSION_REGISTRY $VERSION_REGISTRY";
 
 if [ "$VERSION_LATEST" != "$VERSION_REGISTRY" ]; then
-  echo "Publishing package $VERSION_LATEST";
-  npm whoami
-  npm publish
+    echo "publishing $VERSION_LATEST";
+    npm publish
 else
     echo "Version is the same as the version available on the registry $VERSION_LATEST";
 fi
