@@ -1,0 +1,15 @@
+before_install:
+- echo "//registry.npmjs.org/:_authToken=\${NPMAUTH}" > .npmrc
+- echo "//registry.npmjs.org/:_password=\${NPMTOKEN}" >> .npmrc
+- echo "//registry.npmjs.org/:username=lccgov" >> .npmrc
+- echo "//registry.npmjs.org/:email=developer@leeds.gov.uk" >> .npmrc
+install:
+- npm install -g npm
+script:
+- npm whoami
+- chmod +x ./bin/publish.sh
+- "./bin/publish.sh"
+env:
+  global:
+  - secure: KMpixgraynCepYc+1jdIocKsHupZWm2ELasKHhsMkZ8Is38BmrAr7/N5SCILG4/RpN7szYLz2pNDXEkWuk+SK+76E93h6JfQ6IvIqt0Rjeu9QcyD/t2GcQ9HeHSEyursW75MHYdjnz4SGkfLxE2PVhrv1vwc9sAxsCbFcrYtHiKztzoun4DWX0PZPwAqwylSqm/1q56lEGo8GuyDKUPXWbA+teClwODdmn3JM/ZFdHTYNrt21fjLepF0N/RcEyetNVHJxxB4poaMFsH9hCGd6XbF2nM12RcdKz7Jgl7VtEBTCXVGCQMrFngQR71I4QNT1iGJkX9LOOlmFJy3CGyx540cRBswCwAklYMK6qxWWWwViiNqweSl9kWDF60GhkVixcvS3gBFRTudGTGzpw/gZBj/MAmAJ+qaAdtdAjevVPyiD9eaeesrF5dshO5kD+3qZIJduJBZ8Q5QBS/dBDO5wPGs2czpZKH9/caTqIh9KhzEM8G8GoT793sQ71PccM+d9wzDACNZLvx3iMjO6j2S2KSlOYqez+pxxRIN5xwRivL4H6v3QLxA2gckP3wdLfIdKrmSwtHnEl9mKEsiTnoa6DSMwQPm/YiLFZK/HjgUz4oXVG0W1yHLYCjCxVHVmzUpze55hrvT8xVf4e8i25jVIMc/57xO1q4+sfQcLU66hMc=
+  - secure: eW1ro4vZxDxVjMFVivEml96NezBty0HjcahbTdM3CtHuROI5bXL43orToPhq5xm5SSnnCKB1Rab14m1rl3BcbI4OP7i5F0D76C8i3nlyAJskPjuQVsRd1vR34Qj2Jy7VdIqTAn3SkqoKVk5rFgPvxAslmbDCFIYSr4pSM7PbxGME5qa9ijyL/44Gn68GvWyyuxfnxbAGqgbsJSRhrosS0DWbYXkUvO0vAnS/EsexbjAtzMpa+Xb+leNxCzpkG61dIfx9O9eo+HZTx24y9HzIExg6wt+/LeBdydFojF3WMi8CWeS0w44eNMVjroLcmAmxdmkYvr9v/lwr8KFRc2p1wLu2cPSe5HgpPh/uZ+tx0qmQtL6PcSb0EEOROSwORyxGlnvlXRs2Vb6TGGNoLlCalSZRxFz2TkdyOJV+kaf9ZbNEuALsk0wNaSIZRcuLm09Zax3NqWskNPpXfRG9x2DKStsH9e2Nv7QN+1HQZcTYdWfCksBVMIXCqOtdJcVi0+LXfyECoA51bEj9Ezkb9FUewPx5V1MicteHjWBZIGoA4KSY5sBI/1w0HEFOM19GHn6yMare+u61odIvU3RYT08Lqk21KhJWs18+QM5euRQb2Q9j4GSsPUu8rnP1hST+dnTQQ8QJuqWR/QdAhfdEud+M9Z1jQ2GcPKkcQwHGbTbm5JA=
