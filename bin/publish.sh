@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 VERSION_LATEST=`cat package.json | jq '.version'`
-VERSION_REGISTRY=`npm view generator-lcc-sharepoint`
+VERSION_REGISTRY=`npm view generator-lcc-sharepoint version`
 echo "VERSION_LATEST $VERSION_LATEST";
 echo "VERSION_REGISTRY $VERSION_REGISTRY";
 
