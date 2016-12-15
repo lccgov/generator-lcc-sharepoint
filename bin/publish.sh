@@ -10,6 +10,5 @@ if [ "$VERSION_LATEST" != "$VERSION_REGISTRY" ]; then
   npm whoami
   npm publish
 else
-  echo 'Version is the same as the version available on the registry'
-  echo 'Not publishing anything'
+    echo "Version is the same as the version available on the registry $VERSION_LATEST";
 fi
