@@ -49,17 +49,4 @@ in the [package.json](https://github.com/lccgov/generator-lcc-sharepoint/blob/ma
 
 
 ## Publishing to NPM
-Once you have updated any of the template files, or updated the package version for dependencies you need to publish these back to NPM so the next time you use the generator, you get the new files or package dependencies. 
-First off you need to update the version number in the [package.json](https://github.com/lccgov/generator-lcc-sharepoint/blob/master/package.json) file for this project.
-
-N.B You need to come off the corporate network to publish to NPM.
-
-Next, from the root of this project type.
-
-```sh
-$ npm publish
-```
-You should see the the new published version number as the last line written. Something like:
-```sh
-+ generator-lcc-sharepoint@0.2.4
-```
+This repo now has a Travi CI build that will publish the package to NPM once the version number has been updated in package.json and pushed back to the server.
