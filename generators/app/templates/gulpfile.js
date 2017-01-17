@@ -84,10 +84,16 @@ gulp.task('sync:lcc_sharepoint_toolkit_webparts', ['sync:javascripts'], (done) =
             return stream.pipe(ignore.exclude(!(_.includes(manifest.webparts, path.basename(file.path,'.webpart')))))
                 .pipe(gulp.dest('dist/_catalogs/wp'))
         }))
-})
+});
+
+//Sync node_modules/lcc_sharepoint_toolkit/displaytemplates to dist/_catalogs/masterpage/Display Templates/Content Web Parts
+gulp.task('sync:lcc_sharepoint_toolkit_displaytemplates', ['sync:lcc_sharepoint_toolkit_webparts'], (done) => {
+    return gulp.src('node_modules/lcc_sharepoint_toolkit/displaytemplates/*.html')
+        .pipe(gulp.dest('dist/_catalogs/masterpage/Display Templates/Content Web Parts'))
+});
 
 //Sync lcc_templates_sharepoint/assets excluding JS to dist/_catalogs/masterpages/public
-gulp.task('sync:lcc_templates_sharepoint_assets', ['sync:lcc_sharepoint_toolkit_webparts'], (done) => {
+gulp.task('sync:lcc_templates_sharepoint_assets', ['sync:lcc_sharepoint_toolkit_displaytemplates'], (done) => {
     syncy(['node_modules/lcc_templates_sharepoint/assets/**/*', '!node_modules/lcc_templates_sharepoint/assets/**/*.json', '!node_modules/lcc_templates_sharepoint/assets/javascripts/*', '!node_modules/lcc_templates_sharepoint/assets/stylesheets/*'], 'dist/_catalogs/masterpage/public', {
             base: 'node_modules/lcc_templates_sharepoint/assets',
             updateAndDelete: false

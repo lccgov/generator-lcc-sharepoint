@@ -38,5 +38,50 @@
             "Title": "News Article Layout (LCC)",
             "ContentTypeId": "0x01010007FF3E057FA8AB4AA42FCB67B453FFC100E214EEE741181F4E9F7ACC43278EE811"
         }
+    },
+    {
+        "name": "LCCNewsArchiveFilter.webpart",
+        "metadata": {
+            "__metadata": {
+                "type": "SP.Data.OData__x005f_catalogs_x002f_wpItem"
+            },
+            "Group": "LCC"
+        }
+    },
+    {
+        "name": "LCCNewsDateFilter.webpart",
+        "metadata": {
+            "__metadata": {
+                "type": "SP.Data.OData__x005f_catalogs_x002f_wpItem"
+            },
+            "Group": "LCC"
+        }
+    },
+    {
+        "name": "LCCNewsKeywordFilter.webpart",
+        "metadata": {
+            "__metadata": {
+                "type": "SP.Data.OData__x005f_catalogs_x002f_wpItem"
+            },
+            "Group": "LCC"
+        }
+    },
+    {
+        "name": "LCCNewsResults.webpart",
+        "metadata": {
+            "__metadata": {
+                "type": "SP.Data.OData__x005f_catalogs_x002f_wpItem"
+            },
+            "Group": "LCC"
+        }
+    },
+    {
+        "name": "LCCNewsResultsSearch.webpart",
+        "metadata": {
+            "__metadata": {
+                "type": "SP.Data.OData__x005f_catalogs_x002f_wpItem"
+            },
+            "Group": "LCC"
+        }
     }
 ]
