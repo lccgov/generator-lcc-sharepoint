@@ -43,10 +43,19 @@ Please see the [readme file](https://github.com/lccgov/generator-lcc-sharepoint/
 
 If you're using this readme as a starter to scaffold your project, you need to read no further. The rest of this readme concerns itself with updating the generator.
 
-## Updating package version numbers for the generated project
+## Updating package version numbers for packages used in the generated project
 Remember when you want to update the version number for packages that are in the generated project you need to update them 
 in the [package.json](https://github.com/lccgov/generator-lcc-sharepoint/blob/master/generators/app/templates/package.json) for the template, not in the package.json for this project. For example if you updated the lcc_frontend_toolkit and wanted those changes to be reflect within the project you are generating, you would need to bump the version number in the package above. This applies to adding new packages too.
 
+## Making changes to the generator
+All the files the are created when using the generator to scaffold your project live in the [templates folder](https://github.com/lccgov/generator-lcc-sharepoint/tree/master/generators/app/templates)
+
+If for example, you want to make a change to the application SASS file so all newly generated sites get this by default, you would edit the [application.scss](https://github.com/lccgov/generator-lcc-sharepoint/blob/master/generators/app/templates/app/assets/sass/application.scss) that lives inside the templates directory.
 
 ## Publishing to NPM
-This repo now has a Travi CI build that will publish the package to NPM once the version number has been updated in package.json and pushed back to the server.
+
+Once you have updated anything in the generator, it needs a new NPM package generating so you can use the updated generator.
+
+1. Bump version in [package.json](https://github.com/lccgov/generator-lcc-sharepoint/blob/master/package.json) – we use semantic versioning. NOTE: If this step is omitted, then when you commit and push your changes it will not generate new NPM packages for each of the output formats. Helpful when you are not ready to publish a new package but want to make sure your changes are source controlled.
+2. Commit changes and push to remote repository.
+3. Once pushed, a [Travis CI build](https://travis-ci.org/lccgov/generator-lcc-sharepoint) is kicked off that checks that the version has increased and if so will publish to the NPM registry.
