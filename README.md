@@ -58,4 +58,4 @@ Once you have updated anything in the generator, it needs a new NPM package gene
 
 1. Bump version in [package.json](https://github.com/lccgov/generator-lcc-sharepoint/blob/master/package.json) – we use semantic versioning. NOTE: If this step is omitted, then when you commit and push your changes it will not generate new NPM packages for each of the output formats. Helpful when you are not ready to publish a new package but want to make sure your changes are source controlled.
 2. Commit changes and push to remote repository.
-3. Once pushed, a [Travis CI build](https://travis-ci.org/lccgov/generator-lcc-sharepoint) is kicked off that checks that the version has increased and if so will publish to the NPM registry.
+3. Once pushed, a [Travis CI build](https://travis-ci.org/lccgov/generator-lcc-sharepoint) is kicked off that checks that the version has increased and if so will publish to the [NPM registry](https://www.npmjs.com/package/generator-lcc-sharepoint).
