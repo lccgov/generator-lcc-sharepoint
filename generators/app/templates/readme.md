@@ -43,6 +43,14 @@ Metadata for these files needs to be added to the metadata.json file. The file a
 
 You can leave any other attributes.
 
+### Adding additional code to the footer
+Each masterpage has a section in the footer for addition HTML code, scripts etc.. This is useful for adding things like web chat or google analytics that are specific to each site.
+To inject additional code into the build edit footer.ihtml in the app/assets folder.
+This will then be compiled in and the code placed just before the closing body tag.
+
+### Compiling TypeScript
+You now have the ability to create knockout modules in Typescript and have these compile into your javascript file. There is a test knockout component in the ts folder
+
 ## Dev Deployment
 Modify the settings.json file and enter your network username (without the AD prefix), password and the site you want to deploy the assets to. 
 The project contains a [VS Code](https://code.visualstudio.com) build task that will build and upload the files to the SharePoint site.
@@ -60,6 +68,13 @@ To only upload CSS files run the gulp task like this
 ```sh
 $ gulp upload --css
 ```
+
+To only upload JavaScipt files run the gulp task like this
+```sh
+$ gulp upload --js
+```
+
+You can us multiple switches together e.g. --debug --js
 
 If the task thinks you are deploying to a non dev environment, you will be prompted to confirm the deployment.
 
