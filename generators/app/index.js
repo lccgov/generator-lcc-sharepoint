@@ -9,7 +9,7 @@ module.exports = yeoman.Base.extend({
   prompting: function () {
     // Have Yeoman greet the user.
     this.log(yosay(
-      'Welcome to the ' + chalk.blue('LCC Sharepoint') + ' generator!'
+      'Welcome to the ' + chalk.blue('LCC Sharepoint') + ' generator ' + chalk.green(parentConfig.version)
     ));
 
     var prompts = [
