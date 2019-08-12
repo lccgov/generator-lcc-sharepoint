@@ -1,18 +1,18 @@
 'use strict';
-var yeoman = require('yeoman-generator');
-var chalk = require('chalk');
-var yosay = require('yosay');
-var rename = require("gulp-rename");
-var parentConfig = require('../../package.json');
+const Generator = require('yeoman-generator');
+const chalk = require('chalk');
+const yosay = require('yosay');
+const parentConfig = require('../../package.json');
+const rename = require("gulp-rename");
 
-module.exports = yeoman.Base.extend({
-  prompting: function () {
+module.exports = class extends Generator {
+  prompting() {
     // Have Yeoman greet the user.
-    this.log(yosay(
-      'Welcome to the ' + chalk.blue('LCC Sharepoint') + ' generator ' + chalk.green(parentConfig.version)
-    ));
+    this.log(
+      yosay('Welcome to the ' + chalk.blue('LCC Sharepoint') + ' generator ' + chalk.green(parentConfig.version))
+    );
 
-    var prompts = [
+    const prompts = [
       {
         type: 'confirm',
         name: 'goCreate',
@@ -20,10 +20,10 @@ module.exports = yeoman.Base.extend({
         default: true
       },
       {
-      type: 'input',
-      name: 'name',
-      message: 'What is the name of this package?',
-      default: this.appname
+        type: 'input',
+        name: 'name',
+        message: 'What is the name of this package?',
+        default: this.appname.split(' ').join('.')
       }
       ];
 
@@ -31,20 +31,18 @@ module.exports = yeoman.Base.extend({
       // To access props later use this.props.someAnswer;
       this.props = props;
     }.bind(this));
-  },
+  }
 
-  loadParentConfig: function () {
-    this.props.generatorVersion = parentConfig.version;
-  },
-
-  copyTemplates: function () {
+  writing() {
     var _this = this;
     if(_this.props.goCreate) 
     {
-        console.log(chalk.green("Create you a new shiny SharePoint branding"));
+      this.props.generatorVersion = parentConfig.version;
+        console.log(chalk.green("Creating you a new shiny SharePoint branding project"));
         this.registerTransformStream(rename(function (path) {
-            path.dirname = path.dirname.replace('_','');
-            path.basename = path.basename.replace('_','');
+          path.dirname = path.dirname.replace('_', '');
+          path.basename = path.basename.replace(/^_/gi, ''); // remove first underscore
+          path.basename = path.basename.replace('$$name$$', _this.props.name);
             return path;
         }));
         this.fs.copyTpl(
@@ -53,13 +51,13 @@ module.exports = yeoman.Base.extend({
           _this.props
         );
     }
-  },
+  }
 
-  install: function () {
+  install() {
     if(this.props.goCreate) 
     {
       console.log(chalk.green("Running npm install, so you don't have to"));      
       this.npmInstall();
     }
   }
-});
+};
