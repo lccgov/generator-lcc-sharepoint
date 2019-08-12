@@ -1,6 +1,6 @@
 {
   "name": "generator-lcc-sharepoint",
-  "version": "4.0.3",
+  "version": "4.0.4",
   "description": "LCC SharePoint branding generator",
   "homepage": "https://www.leeds.gov.uk",
   "author": {
@@ -29,6 +29,7 @@
     "gulp-line-ending-corrector": "^1.0.3",
     "gulp-mocha": "^6.0.0",
     "gulp-plumber": "^1.2.1",
+    "gulp-rename": "1.2.2",
     "husky": "^3.0.1",
     "jest": "^24.8.0",
     "lint-staged": "^9.2.0",
@@ -41,7 +42,6 @@
   },
   "dependencies": {
     "chalk": "^2.1.0",
-    "gulp-rename": "^1.2.2",
     "yeoman-generator": "^2.0.1",
     "yosay": "^2.0.1"
   },

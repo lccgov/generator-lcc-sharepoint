@@ -37,17 +37,17 @@ module.exports = class extends Generator {
     var _this = this;
     if(_this.props.goCreate) 
     {
-      this.props.generatorVersion = parentConfig.version;
+      _this.props.generatorVersion = parentConfig.version;
         console.log(chalk.green("Creating you a new shiny SharePoint branding project"));
-        this.registerTransformStream(rename(function (path) {
+        _this.registerTransformStream(rename(function (path) {
           path.dirname = path.dirname.replace('_', '');
           path.basename = path.basename.replace(/^_/gi, ''); // remove first underscore
           path.basename = path.basename.replace('$$name$$', _this.props.name);
             return path;
         }));
-        this.fs.copyTpl(
-          this.templatePath(),
-          this.destinationPath(),
+        _this.fs.copyTpl(
+          _this.templatePath(),
+          _this.destinationPath(),
           _this.props
         );
     }
