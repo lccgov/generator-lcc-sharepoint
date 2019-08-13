@@ -175,7 +175,9 @@ gulp.task('sass', ['sync:lcc_templates_sharepoint_master'], (done) => {
     return gulp.src('app/assets/sass/application.scss')
       .pipe(gutil.env.debug ? sourcemaps.init() : gutil.noop())
       .pipe(sass({includePaths: ['./app/assets/sass',
-            'lcc_modules/lcc_frontend_toolkit/stylesheets/']}).on('error', function (err) {
+            'lcc_modules/lcc_frontend_toolkit/stylesheets/',
+            'lcc_modules/lcc_frontend_toolkit/stylesheets/base_styles/'
+        ]}).on('error', function (err) {
           notify({ title: 'SASS Task' }).write(err.line + ': ' + err.message);
       }))
       .pipe(gutil.env.debug ? sourcemaps.write() : gutil.noop())
