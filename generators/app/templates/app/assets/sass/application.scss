@@ -100,31 +100,31 @@ $accordion-color:green;
 
 @import 'mixins';
 @import 'variables';
-@import 'brandColors';
+@import 'brand-colors';
 
 // available sass files please un-comment out as required
 
-//@import 'mainMenuSubsites';
+//@import 'main-menu';
 @import 'breadcrumb';
-@import 'sectionSubsite';
+@import 'section-subsite';
 @import 'promo';
 @import 'carousel';
-//@import 'socialMedia';
-//@import 'sideNavigation';
-//@import 'blockLinks';
+//@import 'social-media';
+//@import 'side-navigation';
+//@import 'block-links';
 @import 'accordion';
-@import 'promoGroup';
+@import 'promo';
 @import 'alerts';
-@import 'promoListwebpart';
+@import 'promo-list-webpart';
 //@import 'eventsWebparts';
-@import 'sharepointOverides';
-@import 'iconLinks';
-@import 'heroBanner';
+@import 'sharepoint-overrides';
+@import 'icon-links';
+@import 'hero-banner';
 @import 'news';
 @import 'polaroids';
-@import 'groupPromo';
-@import 'blocklinks';
-@import 'contentLink';
+@import 'group-promo';
+@import 'block-links';
+@import 'content-link';
 
 
 
